@@ -15,7 +15,9 @@ class DriverSerializers(serializers.ModelSerializer):
 
 
 class RideSerializer(serializers.ModelSerializer):
-    user = UserModel()
+    user = serializers.ReadOnlyField(source='user.username')
+    driver = serializers.ReadOnlyField(source="driver.drivername")
+    # user = UserModel()
     driver = DriverModel()
     class Meta:
         model = RideDetails

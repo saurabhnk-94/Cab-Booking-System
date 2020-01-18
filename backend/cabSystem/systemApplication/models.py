@@ -49,6 +49,6 @@ class RideDetails(models.Model):
     status = models.CharField(choices=RIDE_CHOICES, default=DONE, max_length=2, help_text="Select your choices for a particular user")
 
     def __str__(self):
-        return "Ride of {} and {}".format(self.user.username, self.driver.drivername)
+        return "Ride of {} and {}".format(self.user, self.driver)
 
 
