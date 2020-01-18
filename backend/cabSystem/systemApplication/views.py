@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
-from .serializers import UserSerializers, DriverSerializers, RideSerializer
+from .serializers import UserSerializers, DriverSerializers, RideSerializer, RideCreateSerializer, RideUpdateSerializer
 from .models import UserModel, DriverModel, RideDetails
 
 from rest_framework import viewsets
@@ -84,5 +84,50 @@ class RideViewSet(viewsets.ViewSet):
             queryset = queryset.filter(status=status)
         serializer = RideSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    def create(self, request):
+        print("This is Create start", request.data)
+        try:
+            user = UserModel.objects.get(id=request.data['user'])
+            print("Try block", user)
+        except UserModel.DoesNotExist:
+            print("Except block")
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        requested = RideDetails.objects.filter(user=user).filter(status='RE').count()
+        accepted = RideDetails.objects.filter(user=user).filter(status='AC').count()
+        # print("Queryset", len(queryset))
+        if requested > 0:
+            return Response("Already Requested", status=status.HTTP_226_IM_USED)
+        if accepted > 0:
+            return Response("Ride is ongoing", status=status.HTTP_403_FORBIDDEN)
+        serializer = RideCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, pk=None):
+        ride = RideDetails.objects.get(id=pk)
+        ride.status = request.data.get('status', None)
+        ride.driver = request.data.get('driver', None)
+        ride.save()
+        serializer = RideUpdateSerializer(data=ride)
+        serializer.is_valid()
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        # print("This is update request")
+        # ride = RideDetails.objects.get(id=pk)
+        #
+        # if queryset.filter(status="RE").exists():
+        #     serializer = RideSerializer(request.data)
+        #     serializer.is_valid(raise_exception=True)
+        #     serializer.save()
+        #     return Response(serializer, status=status.HTTP_202_ACCEPTED)
+        #
+        # if queryset.filter(status="AC").exists():
+        #     serializer = RideSerializer(request.data)
+        #     serializer.is_valid(raise_exception=True)
+        #     serializer.save()
+        #     return Response(serializer, status=status.HTTP_200_OK)
+
 
 
