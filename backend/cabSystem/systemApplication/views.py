@@ -107,27 +107,21 @@ class RideViewSet(viewsets.ViewSet):
 
     def update(self, request, pk=None):
         ride = RideDetails.objects.get(id=pk)
-        ride.status = request.data.get('status', None)
-        ride.driver = request.data.get('driver', None)
+        status = request.data.get('status', None)
+        if status == 'AC' or status == 'DO':
+            #This ensures only valid states are set, invalid states are ignored
+            ride.status = status
+        if status == 'AC':
+            #Driver is set only while accepting the ride and at no other point
+            driver_name = request.data.get('driver', None)
+            if driver_name is not None:
+                try:
+                    driver = DriverModel.objects.get(drivername=driver_name)
+                    ride.driver = driver
+                except DriverModel.DoesNotExist:
+                    return Response("Driver doesnot exist", status=status.HTTP_400_BAD_REQUEST)
         ride.save()
-        serializer = RideUpdateSerializer(data=ride)
-        serializer.is_valid()
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        # print("This is update request")
-        # ride = RideDetails.objects.get(id=pk)
-        #
-        # if queryset.filter(status="RE").exists():
-        #     serializer = RideSerializer(request.data)
-        #     serializer.is_valid(raise_exception=True)
-        #     serializer.save()
-        #     return Response(serializer, status=status.HTTP_202_ACCEPTED)
-        #
-        # if queryset.filter(status="AC").exists():
-        #     serializer = RideSerializer(request.data)
-        #     serializer.is_valid(raise_exception=True)
-        #     serializer.save()
-        #     return Response(serializer, status=status.HTTP_200_OK)
+
 
 
 
