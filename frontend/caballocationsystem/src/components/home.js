@@ -12,6 +12,10 @@ class Home extends React.Component {
                     <NavLink to="user">User</NavLink>
                     <NavLink to="driver">Driver</NavLink>
                 </div>
+                <div className="settings">
+                    To create user or driver please click on settings
+                    <NavLink to="settings">Settings</NavLink>
+                </div>
             </div>
 
         )

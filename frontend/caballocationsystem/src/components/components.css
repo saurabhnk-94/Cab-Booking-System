@@ -4,9 +4,10 @@
 
 .home-content {
     display: flex;
-    width: 300px;
+    width: 500px;
     justify-content: space-between;
     align-items: center;
+    font-size: 50px;
 }
 
 .driver-home {
@@ -52,4 +53,9 @@
     text-align: left;
     background-color: #4CAF50;
     color: white;
+}
+
+.settings {
+    margin-top: 50px;
+    font-size: 40px;
 }
