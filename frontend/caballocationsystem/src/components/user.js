@@ -8,6 +8,7 @@ class User extends Component {
     this.state = {
       user: [],
       username: "",
+      userid:"",
       rideDetails: []
     };
   }
@@ -34,6 +35,19 @@ class User extends Component {
 
   bookingCab = () => {
     const username = this.state.username;
+    console.log("length", this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length)
+    if (this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length > 0) {
+        alert("You can't book the cab as you are already on board")
+    } else if (this.state.rideDetails.filter(items => items.user == username && items.status == "RE").length > 0) {
+        alert("You have already requested for the cab")
+    }
+    else {
+        axios.post(`http://127.0.0.1:8000/ridedetails/`,{
+            user:username,
+            status:"RE"
+        })
+    }   
+
   };
 
   render() {
