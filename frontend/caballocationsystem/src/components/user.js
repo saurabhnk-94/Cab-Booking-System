@@ -91,11 +91,11 @@ class User extends Component {
             Book Cab
           </button>
         ) : null}
-        {console.log("Filtering", (this.state.rideDetails.filter(items => items.user === this.state.username && items.status !== "AC" || items.user === this.state.username && items.status !== "RE").length > 0))}
+        {console.log("Filtering", (this.state.rideDetails.filter(items => ((items.user === this.state.username && items.status !== "AC") || (items.user === this.state.username && items.status !== "RE"))).length > 0))}
         {console.log("ride", this.state.rideDetails)}
         {this.state.rideDetails
           .filter(
-            items => items.user === this.state.username && items.status === "RE"
+            items => (items.user === this.state.username && items.status === "RE")
           )
           .map((item, index) => (
             <div key={index} className="driver-on-going">

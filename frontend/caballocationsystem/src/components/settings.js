@@ -88,7 +88,7 @@ class Settings extends React.Component {
                 <div>
                         <ol>
                             {this.state.user.map((items, index) => (
-    <li key={index}>{items.username}</li>
+    <li key={index}><h4>{items.username}</h4></li>
                             ))}
                         </ol>
                     </div>
@@ -97,7 +97,7 @@ class Settings extends React.Component {
                     <div>
                         <ol>
                             {this.state.drivers.map((items, index) => (
-    <li key={index}>{items.drivername}</li>
+    <li key={index}><h4>{items.drivername}</h4></li>
                             ))}
                         </ol>
                     </div>

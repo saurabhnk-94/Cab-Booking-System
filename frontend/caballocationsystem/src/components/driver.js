@@ -12,9 +12,25 @@ class Driver extends Component {
       rideDetails: []
     };
     this.acceptingCab = this.acceptingCab.bind(this);
+    this.getUpdate = this.getUpdate.bind(this);
   }
 
+  getUpdate() {
+    let obj = this;
+    setInterval(function() {
+      axios.get("http://127.0.0.1:8000/ridedetails/").then(res =>
+    obj.setState({
+      rideDetails: res.data
+    }, function() {
+        console.log('res setting');
+        console.log(res.data);
+      })
+    );
+    }, 1000, obj);
+  }
+  
   componentDidMount() {
+    this.getUpdate();
     axios
       .get("http://127.0.0.1:8000/drivers/")
       .then(res =>
@@ -25,11 +41,16 @@ class Driver extends Component {
       .catch(err => console.log("Error", err));
 
     axios.get("http://127.0.0.1:8000/ridedetails/").then(res =>
-      this.setState({
-        rideDetails: res.data
+    this.setState({
+      rideDetails: res.data
+    }, function() {
+        console.log('res setting');
+        console.log(res.data);
       })
     );
   }
+  
+
 
   acceptingCab = (id,drivername) => {
     console.log("accepting the cab:",id ,drivername);
@@ -41,14 +62,20 @@ class Driver extends Component {
       driver:drivername,
       status:"AC"
     })
-    .then(res => console.log("status",res.status))
+    .then(res =>
+    console.log(res)
+      )
     .catch(err => console.log("Error", err))
     alert("Thank you for accepting the ride")
   }
 }
 
   render() {
-    console.log(this.state.drivername);
+    let driversList = this.state.rideDetails.filter(items => (items.status === "RE"));
+    let renderCondition = this.state.drivername.length > 0 && driversList.length > 0;
+    console.log('render: '+renderCondition);
+    console.log('ridedetails: '+this.state.rideDetails);
+    console.log(driversList);
     return (
       <div className="driver-home">
         <div className="driver-header">
@@ -85,22 +112,28 @@ class Driver extends Component {
               ))
           : null}
 
+
+
+
         {
-          this.state.drivername && (this.state.rideDetails.filter(items => items.driver === this.state.drivername && items.status !== "AC").length > 0) ?
+          renderCondition ?
         this.state.rideDetails
           .filter(items => items.status === "RE")
           .map((item, index) => (
             <div key={index} className="display-cards">
               <div className="card">
                 <div className="card-details">
-                  <div style={{ padding: 10 }}>Name: &nbsp;{item.user}</div>
-                  <div style={{ padding: 10 }}>Date: &nbsp;{item.ride_created}</div>
-                  <div style={{ padding: 10 }}>Status: Requesting</div>
+                  <h3>Name: &nbsp;{item.user}</h3>
+                  <h3>Date: &nbsp;{item.ride_created}</h3>
+                  <h3>Status: Requesting</h3>
                   <button onClick={() => this.acceptingCab(item.id,this.state.drivername)}>ACCEPT</button>
                 </div>
               </div>
             </div>
           )) : null}
+
+
+
         {(this.state.drivername.length > 0 && this.state.drivername !== 'Select a Driver') ? (
           <div className="driver-ride">
             <h3>{this.state.drivername} Previous Ride Details</h3>
