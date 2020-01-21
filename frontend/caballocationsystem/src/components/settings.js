@@ -68,41 +68,6 @@ class Settings extends React.Component {
                 Welcome to the Settings page
                 <NavLink to="/">Home</NavLink>
                 </div>
-                    
-          &nbsp;
-                <h2>List of users</h2>
-                <table id="customers">
-                   <thead>
-                       <tr>
-                       <th>Users</th>  
-                       </tr>
-                   </thead>
-                   <tbody>
-                        <tr>
-                       {this.state.user.map((items, index) => (
-    <td key={index}>{items.username}</td>
-                       ))}
-                       </tr>
-                   </tbody>
-                </table>
-
-                <h2>List of Drivers</h2>
-                <table id="customers">
-                   <thead>
-                       <tr>
-                       <th>Drivers</th>  
-                       </tr>
-                   </thead>
-                   <tbody>
-                        <tr>
-                       {this.state.drivers.map((items, index) => (
-    <td key={index}>{items.drivername}</td>
-                       ))}
-                       </tr>
-                   </tbody>
-                </table>
-
-
                 <div className="creating-user">
                     <div>Create user:</div>
                     <div>
@@ -117,8 +82,25 @@ class Settings extends React.Component {
                         <button onClick={() => this.driverSubmit(this.state.drivername)}>Submit</button>
                     </div>
                 </div>
+                    
+          &nbsp;
+                <h2>List of existing users</h2>
+                <div>
+                        <ol>
+                            {this.state.user.map((items, index) => (
+    <li key={index}>{items.username}</li>
+                            ))}
+                        </ol>
+                    </div>
 
-
+                <h2>List of existing Drivers</h2>
+                    <div>
+                        <ol>
+                            {this.state.drivers.map((items, index) => (
+    <li key={index}>{items.drivername}</li>
+                            ))}
+                        </ol>
+                    </div>
             </div>
         )
     }

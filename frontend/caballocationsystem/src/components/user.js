@@ -38,9 +38,9 @@ class User extends Component {
     // console.log('user detail:', user)
     // console.log("user id",user[0].id)
     // console.log("length", this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length)
-    if (this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length > 0) {
+    if (this.state.rideDetails.filter(items => items.user === username && items.status === "AC").length > 0) {
         alert("You can't book the cab as you are already on board")
-    } else if (this.state.rideDetails.filter(items => items.user == username && items.status == "RE").length > 0) {
+    } else if (this.state.rideDetails.filter(items => items.user === username && items.status === "RE").length > 0) {
         alert("You have already requested for the cab")
     }
     else {
@@ -76,7 +76,7 @@ class User extends Component {
           value={this.state.value}
           onChange={event => this.setState({ username: event.target.value })}
         >
-          <option>select</option>
+          <option>Select a User </option>
           {this.state.user.map((item, index) => (
             <option key={index} value={item.username} >
               {item.id} &nbsp;{item.username}
@@ -86,16 +86,16 @@ class User extends Component {
           {console.log("select value", this.state.username)}
         </select>
         <div></div>
-        {this.state.username ? (
+        {(this.state.username.length > 0 && this.state.username !== "Select a User") ? (
           <button className="booking-button" onClick={() => this.bookingCab(this.state.username)}>
             Book Cab
           </button>
         ) : null}
-        {console.log("Filtering", (this.state.rideDetails.filter(items => items.user == this.state.username && items.status != "AC" || items.user == this.state.username && items.status != "RE").length > 0))}
+        {console.log("Filtering", (this.state.rideDetails.filter(items => items.user === this.state.username && items.status !== "AC" || items.user === this.state.username && items.status !== "RE").length > 0))}
         {console.log("ride", this.state.rideDetails)}
         {this.state.rideDetails
           .filter(
-            items => items.user == this.state.username && items.status == "RE"
+            items => items.user === this.state.username && items.status === "RE"
           )
           .map((item, index) => (
             <div key={index} className="driver-on-going">
@@ -106,7 +106,7 @@ class User extends Component {
 
         {this.state.rideDetails
           .filter(
-            items => items.user == this.state.username && items.status == "AC"
+            items => items.user === this.state.username && items.status === "AC"
           )
           .map((item, index) => (
             <div key={index} className="driver-on-going">
@@ -117,7 +117,7 @@ class User extends Component {
             </div>
           ))}
 
-        {this.state.username ? (
+        {(this.state.username.length > 0 && this.state.username !== "Select a User") ? (
           <div className="driver-ride">
             <h3>{this.state.username} Previous Ride Details </h3>
             <table id="customers">
@@ -130,7 +130,7 @@ class User extends Component {
               </thead>
               <tbody>
                 {this.state.rideDetails
-                  .filter(items => items.user == this.state.username)
+                  .filter(items => items.user === this.state.username)
                   .map((item, index) => (
                     <tr key={index}>
                       {console.log("table content", item)}

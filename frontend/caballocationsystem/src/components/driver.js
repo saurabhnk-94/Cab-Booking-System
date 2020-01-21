@@ -33,8 +33,8 @@ class Driver extends Component {
 
   acceptingCab = (id,drivername) => {
     console.log("accepting the cab:",id ,drivername);
-    console.log("Length of driver", this.state.rideDetails.filter(items => items.driver == drivername && items.status == "AC").length)
-    if (this.state.rideDetails.filter(items => items.driver == drivername && items.status == "AC").length > 0) {
+    console.log("Length of driver", this.state.rideDetails.filter(items => items.driver === drivername && items.status === "AC").length)
+    if (this.state.rideDetails.filter(items => items.driver === drivername && items.status === "AC").length > 0) {
       alert("You are already on a ride, You cannot accept another ride")
     } else {
     axios.put(`http://127.0.0.1:8000/ridedetails/${id}/`, {
@@ -48,6 +48,7 @@ class Driver extends Component {
 }
 
   render() {
+    console.log(this.state.drivername);
     return (
       <div className="driver-home">
         <div className="driver-header">
@@ -75,7 +76,7 @@ class Driver extends Component {
           ? this.state.rideDetails
               .filter(
                 items =>
-                  items.driver == this.state.drivername && items.status == "AC"
+                  (items.driver === this.state.drivername && items.status === "AC")
               )
               .map((driver, index) => (
                 <div key={index} className="driver-on-going">
@@ -85,9 +86,9 @@ class Driver extends Component {
           : null}
 
         {
-          this.state.drivername && (this.state.rideDetails.filter(items => items.driver == this.state.drivername && items.status != "AC").length > 0) ?
+          this.state.drivername && (this.state.rideDetails.filter(items => items.driver === this.state.drivername && items.status !== "AC").length > 0) ?
         this.state.rideDetails
-          .filter(items => items.status == "RE")
+          .filter(items => items.status === "RE")
           .map((item, index) => (
             <div key={index} className="display-cards">
               <div className="card">
@@ -100,7 +101,7 @@ class Driver extends Component {
               </div>
             </div>
           )) : null}
-        {this.state.drivername ? (
+        {(this.state.drivername.length > 0 && this.state.drivername !== 'Select a Driver') ? (
           <div className="driver-ride">
             <h3>{this.state.drivername} Previous Ride Details</h3>
             <table id="customers">
@@ -113,7 +114,7 @@ class Driver extends Component {
               </thead>
               <tbody>
                 {this.state.rideDetails
-                  .filter(items => items.driver == this.state.drivername)
+                  .filter(items => items.driver === this.state.drivername)
                   .map((item, index) => (
                     <tr key={index}>
                       <td>{item.user}</td>
