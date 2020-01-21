@@ -23,8 +23,6 @@ pkg-resources==0.0.0
 psycopg2==2.8.4
 pytz==2019.3
 sqlparse==0.3.0
-
-
 ```
 ### Installing
 
@@ -34,7 +32,6 @@ Clone the repository
 https://github.com/saurabhnk-94/cabAllocationSystem.git
 ```
 Setting up your virtual environment:
-
 ```
 python3 -m venv .env
 ```
@@ -82,6 +79,13 @@ To make this project following Languages and Libraries have been used:
 #### Frontend : React Js;
 #### Backend : Python/Django;
 #### Database : PostgreSQL;
+#### Python : 3.6.8
+
+Further Explanation :
+Create a Database on local system: 
+## Database Name: cabSystem;
+## username: cabsystemuser;
+## passsword: 'cabsystem';
 
 
 P.S:The aesthetics of the page is at the most basic level. Some more work could be put in to beautify the UI. The project has been completed keeping the sole aim as working completion rather than aesthetically pleasing.
