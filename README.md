@@ -83,9 +83,11 @@ To make this project following Languages and Libraries have been used:
 
 Further Explanation :
 Create a Database on local system: 
-## Database Name: cabSystem;
-## username: cabsystemuser;
-## passsword: 'cabsystem';
+```
+Database Name: cabSystem
+username: cabsystemuser
+passsword: 'cabsystem'
+```
 
 
 P.S:The aesthetics of the page is at the most basic level. Some more work could be put in to beautify the UI. The project has been completed keeping the sole aim as working completion rather than aesthetically pleasing.
