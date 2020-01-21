@@ -50,8 +50,16 @@ class User extends Component {
         })
         alert("Thank you for booking the cab")
     }   
-
   };
+
+  endTrip = (id) => {
+    axios.put(`http://127.0.0.1:8000/ridedetails/${id}/`,{
+      status:"DO"
+    })
+    .then(res => console.log("End Trip", res.data.status))
+    .catch(err => console.log("Error", err))
+    alert("Thank you for riding, You can book the cab from now on")
+  }
 
   render() {
     return (
@@ -110,7 +118,7 @@ class User extends Component {
             <div key={index} className="driver-on-going">
               {console.log("drivername", item.driver)}
               <h2>
-                You are on the CAB with {item.driver} <button>End Trip</button>
+                You are on the CAB with {item.driver} <button onClick={() => this.endTrip(item.id)}>End Trip</button>
               </h2>
             </div>
           ))}

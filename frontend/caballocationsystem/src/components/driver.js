@@ -33,9 +33,9 @@ class Driver extends Component {
 
   acceptingCab = (id,drivername) => {
     console.log("accepting the cab:",id ,drivername);
-    console.log("Length of driver", this.state.rideDetails.filter(items => items.drivername == drivername && items.status == "AC").length)
-    if (this.state.rideDetails.filter(items => items.drivername == drivername && items.status == "AC").length > 0) {
-      alert("You are already on a ride, Youu cannot accept another ride")
+    console.log("Length of driver", this.state.rideDetails.filter(items => items.driver == drivername && items.status == "AC").length)
+    if (this.state.rideDetails.filter(items => items.driver == drivername && items.status == "AC").length > 0) {
+      alert("You are already on a ride, You cannot accept another ride")
     } else {
     axios.put(`http://127.0.0.1:8000/ridedetails/${id}/`, {
       driver:drivername,
