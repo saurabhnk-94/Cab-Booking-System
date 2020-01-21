@@ -11,6 +11,7 @@ class Driver extends Component {
       drivername: "",
       rideDetails: []
     };
+    this.acceptingCab = this.acceptingCab.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +30,22 @@ class Driver extends Component {
       })
     );
   }
+
+  acceptingCab = (id,drivername) => {
+    console.log("accepting the cab:",id ,drivername);
+    console.log("Length of driver", this.state.rideDetails.filter(items => items.drivername == drivername && items.status == "AC").length)
+    if (this.state.rideDetails.filter(items => items.drivername == drivername && items.status == "AC").length > 0) {
+      alert("You are already on a ride, Youu cannot accept another ride")
+    } else {
+    axios.put(`http://127.0.0.1:8000/ridedetails/${id}/`, {
+      driver:drivername,
+      status:"AC"
+    })
+    .then(res => console.log("status",res.status))
+    .catch(err => console.log("Error", err))
+    alert("Thank you for accepting the ride")
+  }
+}
 
   render() {
     return (
@@ -75,7 +92,9 @@ class Driver extends Component {
               ))
           : null}
 
-        {this.state.rideDetails
+        {
+          this.state.drivername ?
+        this.state.rideDetails
           .filter(items => items.status == "RE")
           .map((item, index) => (
             <div key={index}>
@@ -84,11 +103,11 @@ class Driver extends Component {
                   <div style={{ padding: 10 }}>{item.user}</div>
                   <div style={{ padding: 10 }}>{item.ride_created}</div>
                   <div style={{ padding: 10 }}>Requesting</div>
-                  <button>ACCEPT</button>
+                  <button onClick={() => this.acceptingCab(item.id,this.state.drivername)}>ACCEPT</button>
                 </div>
               </div>
             </div>
-          ))}
+          )) : null}
         {this.state.drivername ? (
           <div className="driver-ride">
             <h3>Driver Previous Ride Details</h3>
@@ -105,7 +124,6 @@ class Driver extends Component {
                   .filter(items => items.driver == this.state.drivername)
                   .map((item, index) => (
                     <tr key={index}>
-                      {console.log("table content", item)}
                       <td>{item.user}</td>
                       <td>{item.ride_created}</td>
                       <td>{item.status}</td>

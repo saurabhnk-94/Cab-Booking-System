@@ -8,8 +8,7 @@ class User extends Component {
     this.state = {
       user: [],
       username: "",
-      userid:"",
-      rideDetails: []
+      rideDetails: [],
     };
   }
 
@@ -33,8 +32,11 @@ class User extends Component {
       .catch(err => console.log("Error", err));
   }
 
-  bookingCab = () => {
-    const username = this.state.username;
+  bookingCab = (username) => {
+    const user = this.state.user.filter(item=> item.username === username)
+    console.log('user detail:', user)
+    // const username = this.state.username;
+    console.log("user id",user[0].id)
     console.log("length", this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length)
     if (this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length > 0) {
         alert("You can't book the cab as you are already on board")
@@ -43,9 +45,10 @@ class User extends Component {
     }
     else {
         axios.post(`http://127.0.0.1:8000/ridedetails/`,{
-            user:username,
+            user:user[0].id,
             status:"RE"
         })
+        alert("Thank you for booking the cab")
     }   
 
   };
@@ -75,13 +78,14 @@ class User extends Component {
         >
           <option>select</option>
           {this.state.user.map((item, index) => (
-            <option key={index} value={item.username}>
+            <option key={index} value={item.username} >
               {item.id} &nbsp;{item.username}
             </option>
           ))}
+       
           {console.log("select value", this.state.username)}
         </select>
-        {this.state.username ? (
+        {this.state.rideDetails ? (
           <button onClick={() => this.bookingCab(this.state.username)}>
             Book Cab
           </button>
