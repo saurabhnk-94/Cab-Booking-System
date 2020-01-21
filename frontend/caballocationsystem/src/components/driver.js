@@ -50,27 +50,19 @@ class Driver extends Component {
   render() {
     return (
       <div className="driver-home">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginRight: 50,
-            fontSize: 30
-          }}
-        >
+        <div className="driver-header">
           <NavLink to="/">Home</NavLink>
           &nbsp;
           <NavLink to="/user">User</NavLink>
           &nbsp;
           <NavLink to="/settings">Settings</NavLink>
         </div>
-        <h1>This is driver Page</h1>
         <h1>Select Driver</h1>
         <select
           value={this.state.value}
           onChange={event => this.setState({ drivername: event.target.value })}
         >
-          <option>select</option>
+          <option>Select a Driver</option>
           {this.state.driver.map((item, index) => (
             <option key={index} value={item.drivername}>
               {item.id} &nbsp;{item.drivername}
@@ -93,16 +85,16 @@ class Driver extends Component {
           : null}
 
         {
-          this.state.drivername ?
+          this.state.drivername && (this.state.rideDetails.filter(items => items.driver == this.state.drivername && items.status != "AC").length > 0) ?
         this.state.rideDetails
           .filter(items => items.status == "RE")
           .map((item, index) => (
-            <div key={index}>
+            <div key={index} className="display-cards">
               <div className="card">
                 <div className="card-details">
-                  <div style={{ padding: 10 }}>{item.user}</div>
-                  <div style={{ padding: 10 }}>{item.ride_created}</div>
-                  <div style={{ padding: 10 }}>Requesting</div>
+                  <div style={{ padding: 10 }}>Name: &nbsp;{item.user}</div>
+                  <div style={{ padding: 10 }}>Date: &nbsp;{item.ride_created}</div>
+                  <div style={{ padding: 10 }}>Status: Requesting</div>
                   <button onClick={() => this.acceptingCab(item.id,this.state.drivername)}>ACCEPT</button>
                 </div>
               </div>
@@ -110,7 +102,7 @@ class Driver extends Component {
           )) : null}
         {this.state.drivername ? (
           <div className="driver-ride">
-            <h3>Driver Previous Ride Details</h3>
+            <h3>{this.state.drivername} Previous Ride Details</h3>
             <table id="customers">
               <thead>
                 <tr>

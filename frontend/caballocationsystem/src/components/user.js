@@ -33,11 +33,11 @@ class User extends Component {
   }
 
   bookingCab = (username) => {
+    // For bookin the cab I am taking the username
     const user = this.state.user.filter(item=> item.username === username)
-    console.log('user detail:', user)
-    // const username = this.state.username;
-    console.log("user id",user[0].id)
-    console.log("length", this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length)
+    // console.log('user detail:', user)
+    // console.log("user id",user[0].id)
+    // console.log("length", this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length)
     if (this.state.rideDetails.filter(items => items.user == username && items.status == "AC").length > 0) {
         alert("You can't book the cab as you are already on board")
     } else if (this.state.rideDetails.filter(items => items.user == username && items.status == "RE").length > 0) {
@@ -64,21 +64,13 @@ class User extends Component {
   render() {
     return (
       <div className="driver-home">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginRight: 50,
-            fontSize: 30
-          }}
-        >
+        <div className="driver-header" >
           <NavLink to="/">Home</NavLink>
           &nbsp;
           <NavLink to="/driver">Driver</NavLink>
           &nbsp;
           <NavLink to="/settings">Settings</NavLink>
         </div>
-        <h1>This is User Page</h1>
         <h1>Select User</h1>
         <select
           value={this.state.value}
@@ -93,11 +85,13 @@ class User extends Component {
        
           {console.log("select value", this.state.username)}
         </select>
-        {this.state.rideDetails ? (
-          <button onClick={() => this.bookingCab(this.state.username)}>
+        <div></div>
+        {this.state.username ? (
+          <button className="booking-button" onClick={() => this.bookingCab(this.state.username)}>
             Book Cab
           </button>
         ) : null}
+        {console.log("Filtering", (this.state.rideDetails.filter(items => items.user == this.state.username && items.status != "AC" || items.user == this.state.username && items.status != "RE").length > 0))}
         {console.log("ride", this.state.rideDetails)}
         {this.state.rideDetails
           .filter(
@@ -122,16 +116,10 @@ class User extends Component {
               </h2>
             </div>
           ))}
-        {/* {this.state.username ?
-          <div>
-          {this.state.rideDetails.filter(items => items.name == this.state.username && items.status == "RE" || items.name == this.state.username && items.status == "AC").length > 0 ?
-          "": <button>Book a Cab</button> }
-          </div>: null}
-        {console.log("length",this.state.rideDetails.filter(items => items.name == this.state.username && items.status == "RE").length)} */}
 
         {this.state.username ? (
           <div className="driver-ride">
-            <h3> Previous Ride Details of {this.state.username}</h3>
+            <h3>{this.state.username} Previous Ride Details </h3>
             <table id="customers">
               <thead>
                 <tr>

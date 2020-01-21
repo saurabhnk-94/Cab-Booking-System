@@ -11,7 +11,8 @@ class Settings extends React.Component {
             username:"",
             drivername:""
         }
-        this.submitHandler = this.submitHandler.bind(this);
+        this.userSubmit = this.userSubmit.bind(this);
+        this.driverSubmit = this.driverSubmit.bind(this);
     }
     componentDidMount() {
         axios
@@ -31,35 +32,43 @@ class Settings extends React.Component {
         );
      }
 
-     submitHandler() {
-         const username = this.state.username;
-         const drivername = this.state.drivername;
+     userSubmit(username) {
+         console.log("usernameSubmit:", username);
          axios.post(`http://127.0.0.1:8000/users/`, {
              username
-         }).then(res => {
-            console.log(res.data);
-         console.log(res.data);})
-         .catch(err => console.log("Error", err))
+         })
+         .then(res => {
+         console.log("Successful",res.data);
+         })
+         .catch(err => console.log("Error", err)) 
          this.setState({
              username:"",
-             
          })
-         axios.post(`http://127.0.0.1:8000/drivers/`, {
-             drivername
-         }).then(res => {
-            console.log(res.data);
-         console.log(res.data);})
-         .catch(err => console.log("Error", err))
-         this.setState({
-             drivername:""
-         })
+           
+        
      }
+
+     driverSubmit(drivername) {
+        console.log("driverSubmit:", drivername);
+        axios.post(`http://127.0.0.1:8000/drivers/`, {
+            drivername
+        }).then(res => {
+        console.log("Successful",res.data);
+        })
+        .catch(err => console.log("Error", err))   
+        this.setState({
+            drivername:"",   
+        })
+    }
     
     render () {
         return (
-            <div>
-                This is Settings page
+            <div className="settings-page">
+                <div className="driver-header">
+                Welcome to the Settings page
                 <NavLink to="/">Home</NavLink>
+                </div>
+                    
           &nbsp;
                 <h2>List of users</h2>
                 <table id="customers">
@@ -94,16 +103,18 @@ class Settings extends React.Component {
                 </table>
 
 
-                <div>Create user:
+                <div className="creating-user">
+                    <div>Create user:</div>
                     <div>
-                        <input type="text" value={this.state.value} onChange={() => this.setState({username:event.target.value})} />
-                        <button onClick={this.submitHandler}>Submit</button>
+                        <input type="text" value={this.state.username} onChange={() => this.setState({username:event.target.value})} />
+                        <button onClick={() => this.userSubmit(this.state.username)}>Submit</button>
                     </div>
                 </div>
-                <div>Create Driver:
+                <div className="creating-user">
+                    <div>Create Driver:</div>
                     <div>
-                        <input type="text" value={this.state.value} onChange={() => this.setState({drivername:event.target.value})} />
-                        <button onClick={this.submitHandler}>Submit</button>
+                        <input type="text" value={this.state.drivername} onChange={() => this.setState({drivername:event.target.value})} />
+                        <button onClick={() => this.driverSubmit(this.state.drivername)}>Submit</button>
                     </div>
                 </div>
 
