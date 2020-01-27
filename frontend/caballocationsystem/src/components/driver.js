@@ -53,8 +53,8 @@ class Driver extends Component {
 
 
   acceptingCab = (id,drivername) => {
-    console.log("accepting the cab:",id ,drivername);
-    console.log("Length of driver", this.state.rideDetails.filter(items => items.driver === drivername && items.status === "AC").length)
+    // console.log("accepting the cab:",id ,drivername);
+    // console.log("Length of driver", this.state.rideDetails.filter(items => items.driver === drivername && items.status === "AC").length)
     if (this.state.rideDetails.filter(items => items.driver === drivername && items.status === "AC").length > 0) {
       alert("You are already on a ride, You cannot accept another ride")
     } else {
@@ -63,7 +63,7 @@ class Driver extends Component {
       status:"AC"
     })
     .then(res =>
-    console.log(res)
+    console.log("result",res)
       )
     .catch(err => console.log("Error", err))
     alert("Thank you for accepting the ride")
@@ -73,9 +73,9 @@ class Driver extends Component {
   render() {
     let driversList = this.state.rideDetails.filter(items => (items.status === "RE"));
     let renderCondition = this.state.drivername.length > 0 && driversList.length > 0;
-    console.log('render: '+renderCondition);
-    console.log('ridedetails: '+this.state.rideDetails);
-    console.log(driversList);
+    // console.log('render: '+renderCondition);
+    // console.log('ridedetails: '+this.state.rideDetails);
+    // console.log(driversList);
     return (
       <div className="driver-home">
         <div className="driver-header">
@@ -96,9 +96,9 @@ class Driver extends Component {
               {item.id} &nbsp;{item.drivername}
             </option>
           ))}
-          {console.log("select value", this.state.drivername)}
+          {/* {console.log("select value", this.state.drivername)} */}
         </select>
-        {console.log("ride", this.state.rideDetails)}
+        {/* {console.log("ride", this.state.rideDetails)} */}
         {this.state.drivername
           ? this.state.rideDetails
               .filter(

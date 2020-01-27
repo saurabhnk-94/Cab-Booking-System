@@ -33,7 +33,7 @@ class Settings extends React.Component {
      }
 
      userSubmit(username) {
-         console.log("usernameSubmit:", username);
+        //  console.log("usernameSubmit:", username);
          axios.post(`http://127.0.0.1:8000/users/`, {
              username
          })
@@ -49,7 +49,7 @@ class Settings extends React.Component {
      }
 
      driverSubmit(drivername) {
-        console.log("driverSubmit:", drivername);
+        // console.log("driverSubmit:", drivername);
         axios.post(`http://127.0.0.1:8000/drivers/`, {
             drivername
         }).then(res => {

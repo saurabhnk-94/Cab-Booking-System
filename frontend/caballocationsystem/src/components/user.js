@@ -83,7 +83,7 @@ class User extends Component {
             </option>
           ))}
        
-          {console.log("select value", this.state.username)}
+          {/* {console.log("select value", this.state.username)} */}
         </select>
         <div></div>
         {(this.state.username.length > 0 && this.state.username !== "Select a User") ? (
@@ -91,15 +91,15 @@ class User extends Component {
             Book Cab
           </button>
         ) : null}
-        {console.log("Filtering", (this.state.rideDetails.filter(items => ((items.user === this.state.username && items.status !== "AC") || (items.user === this.state.username && items.status !== "RE"))).length > 0))}
-        {console.log("ride", this.state.rideDetails)}
+        {/* {console.log("Filtering", (this.state.rideDetails.filter(items => ((items.user === this.state.username && items.status !== "AC") || (items.user === this.state.username && items.status !== "RE"))).length > 0))} */}
+        {/* {console.log("ride", this.state.rideDetails)} */}
         {this.state.rideDetails
           .filter(
             items => (items.user === this.state.username && items.status === "RE")
           )
           .map((item, index) => (
             <div key={index} className="driver-on-going">
-              {console.log("drivername", item.driver)}
+              {/* {console.log("drivername", item.driver)} */}
               <h2>You have requested for the CAB</h2>
             </div>
           ))}
@@ -110,7 +110,7 @@ class User extends Component {
           )
           .map((item, index) => (
             <div key={index} className="driver-on-going">
-              {console.log("drivername", item.driver)}
+              {/* {console.log("drivername", item.driver)} */}
               <h2>
                 You are on the CAB with {item.driver} <button onClick={() => this.endTrip(item.id)}>End Trip</button>
               </h2>
@@ -133,7 +133,7 @@ class User extends Component {
                   .filter(items => items.user === this.state.username)
                   .map((item, index) => (
                     <tr key={index}>
-                      {console.log("table content", item)}
+                      {/* {console.log("table content", item)} */}
                       <td>{item.driver}</td>
                       <td>{item.ride_created}</td>
                       <td>{item.status}</td>
