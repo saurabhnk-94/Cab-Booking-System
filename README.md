@@ -29,7 +29,7 @@ sqlparse==0.3.0
 Clone the repository
 
 ```
-https://github.com/saurabhnk-94/cabAllocationSystem.git
+https://github.com/saurabhnk-94/Cab-Booking-System.git
 ```
 Setting up your virtual environment:
 ```
@@ -79,11 +79,11 @@ Exit out of the postgres user’s shell session to get back to your regular user
 exit
 ```
 
-After all these steps go to the backend directory(cabAllocationSystem/backend) and there you can find a file called requirement.txt and then type the following code in your terminal:
+After all these steps go to the backend directory(Cab-Booking-System/backend) and there you can find a file called requirement.txt and then type the following code in your terminal:
 ```
 pip install -r requirements.txt
 ```
-Then to run the server, go to the directory 'cabAllocationSystem/backend/cabSystem/' and type the following code in terminal :
+Then to run the server, go to the directory 'Cab-Booking-System/backend/cabSystem/' and type the following code in terminal :
 ```
 python3 manage.py runserver
 ```
@@ -103,7 +103,7 @@ For Frontend which is ReactJS, Dependencies are:
 ```
 Kindly note redux is not implemented.
 
-Go to 'cabAllocationSystem/frontend/caballocationsystem/' and type the following code in the terminal:
+Go to 'Cab-Booking-System/frontend/caballocationsystem/' and type the following code in the terminal:
 ```
 npm install
 ```
