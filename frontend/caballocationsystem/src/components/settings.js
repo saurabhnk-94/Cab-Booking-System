@@ -13,23 +13,28 @@ class Settings extends React.Component {
         }
         this.userSubmit = this.userSubmit.bind(this);
         this.driverSubmit = this.driverSubmit.bind(this);
+        this.refresh=this.refresh.bind(this);
     }
     componentDidMount() {
+        this.refresh();
+     }
+
+     refresh(){
         axios
-          .get("http://127.0.0.1:8000/users/")
-          .then(res =>
-            this.setState({
-              user: res.data
-            })
-          )
-          .catch(err => console.log("Error", err));
-    
-        axios.get("http://127.0.0.1:8000/drivers/").then(res =>
+        .get("http://127.0.0.1:8000/users/")
+        .then(res =>
           this.setState({
-            drivers: res.data
+            user: res.data
           })
-        ).catch(err => console.log("Error", err)
-        );
+        )
+        .catch(err => console.log("Error", err));
+  
+      axios.get("http://127.0.0.1:8000/drivers/").then(res =>
+        this.setState({
+          drivers: res.data
+        })
+      ).catch(err => console.log("Error", err)
+      );
      }
 
      userSubmit(username) {
@@ -39,11 +44,14 @@ class Settings extends React.Component {
          })
          .then(res => {
          console.log("Successful",res.data);
+         this.refresh();
          })
          .catch(err => console.log("Error", err)) 
          this.setState({
              username:"",
          })
+
+         
            
         
      }
@@ -54,11 +62,19 @@ class Settings extends React.Component {
             drivername
         }).then(res => {
         console.log("Successful",res.data);
+        this.refresh();
         })
         .catch(err => console.log("Error", err))   
         this.setState({
             drivername:"",   
         })
+
+        axios.get("http://127.0.0.1:8000/drivers/").then(res =>
+        this.setState({
+          drivers: res.data
+        })
+      ).catch(err => console.log("Error", err)
+      );
     }
     
     render () {
